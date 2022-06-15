@@ -37,8 +37,10 @@ class View: UIViewController {
     }()
 
     private lazy var viewModel = ViewModel(
-        tapActionObservable: tapGesture.rx.event.asObservable(),
-        textInputObservable: textField1.rx.text.asObservable()
+        event: Input.init(
+            tapAction: tapGesture.rx.event.asObservable(),
+            textInput: textField1.rx.text.asObservable()
+        )
     )
 
     override func viewDidLoad() {

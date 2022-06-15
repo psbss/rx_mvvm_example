@@ -9,20 +9,24 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+struct Input {
+    var tapAction: Observable<UITapGestureRecognizer>
+    var textInput: Observable<String?>
+}
+
 final class ViewModel {
     private let disposeBag = DisposeBag()
     let labelText: Observable<String>
     let text: Observable<String?>
 
     init(
-        tapActionObservable: Observable<UITapGestureRecognizer>,
-        textInputObservable: Observable<String?>
+        event: Input
     ) {
-        self.labelText = tapActionObservable
+        self.labelText = event.tapAction
             .flatMap({ _ -> Observable<String> in
                 return .just("ok")
             })
-        self.text = textInputObservable
+        self.text = event.textInput
             .flatMap({ string -> Observable<String?> in
                 return .just(string)
             })
